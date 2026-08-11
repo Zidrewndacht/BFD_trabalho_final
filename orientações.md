@@ -37,55 +37,7 @@ Eventualmente, uma API externa é consumida
 Relatórios podem ser exportados
 ```
 
----
-
-# 2. Escopo recomendado para não errar
-
-Para cumprir os requisitos sem complicar demais, uma boa ideia é construir um sistema simples, mas completo.
-
-## Sugestão de projeto
-
-### Sistema de tarefas/chamados com usuários e categorias
-
-Funcionalidades possíveis:
-
-- cadastro e login de usuários;
-- criação, edição, exclusão e listagem de tarefas;
-- categorias para organizar tarefas;
-- status: pendente, em andamento, concluída;
-- filtro por status ou categoria;
-- dashboard desktop;
-- interface mobile para visualizar e criar tarefas;
-- exportação de relatório HTML standalone;
-- consumo de API externa, por exemplo:
-  - ViaCEP para preencher endereço do usuário;
-  - IBGE para listar estados/cidades;
-  - Open-Meteo para mostrar clima no dashboard.
-
-Esse escopo permite cumprir naturalmente:
-
-- CRUD;
-- chaves estrangeiras;
-- autenticação;
-- API JSON;
-- JavaScript com `fetch()`;
-- exportação offline;
-- testes de regra de negócio.
-
----
-
 # 3. Arquitetura recomendada
-
-A arquitetura recomendada é baseada no que já foi visto nas aulas de Flask:
-
-- **Application Factory**
-- **Blueprints**
-- **SQLite**
-- **Templates Jinja2**
-- **Serviços/modelos com POO**
-- **API JSON consumida por JavaScript**
-
----
 
 ## 3.1 Estrutura de pastas de exemplo
 
@@ -151,8 +103,6 @@ O projeto pode seguir um padrão simples, próximo de um MVC/Flask tradicional:
 | Serviço | Regras de negócio | Classes em `servicos.py` |
 | Persistência | Acesso ao banco | `db.py`, queries parametrizadas |
 
-O importante é que a equipe escolha um padrão e o aplique com consistência.
-
 ---
 
 # 4. Checklist geral do trabalho final
@@ -197,7 +147,7 @@ Use esta tabela como visão rápida.
 
 # 5. Requisito por requisito: como implementar
 
-A seguir, cada requisito obrigatório é traduzido em implementação prática.
+A seguir, alguns requisitos obrigatórios traduzidos em implementação prática.
 
 ---
 
@@ -346,7 +296,6 @@ Checklist mínimo:
 - hierarquia de títulos sem saltos;
 - elementos interativos alcançáveis por teclado;
 - foco visível;
-- mensagens dinâmicas podem usar `aria-live`.
 
 Exemplo:
 
@@ -366,25 +315,6 @@ sem label.
 ---
 
 ## 5.2 Banco de dados
-
-### Escolha recomendada
-
-Para simplificar:
-
-```text
-SQLite
-```
-
-Vantagens:
-
-- não precisa instalar servidor;
-- funciona com arquivo local;
-- já foi visto no curso;
-- fácil de inspecionar com DB Browser for SQLite.
-
-PostgreSQL ou MariaDB podem ser usados por equipes que quiserem desafio maior.
-
----
 
 ### Schema com chaves estrangeiras
 
@@ -430,19 +360,6 @@ No Flask:
 ```python
 g.db.execute("PRAGMA foreign_keys = ON")
 ```
-
----
-
-### CRUD
-
-A aplicação deve permitir:
-
-| Operação | Exemplo |
-|---|---|
-| Create | criar tarefa |
-| Read | listar tarefas |
-| Update | alterar status ou editar tarefa |
-| Delete | excluir tarefa |
 
 ---
 
@@ -1261,107 +1178,6 @@ instance/
 .idea/
 ```
 
-Atenção: se quiserem manter um banco de exemplo muito simples, podem versionar um `.db` pequeno, mas normalmente é melhor deixar o banco fora e fornecer `seed.py`.
-
----
-
-## Etapa 2 — Banco de dados
-
-- desenhar entidades;
-- criar `schema.sql`;
-- criar chaves estrangeiras;
-- testar criação do banco;
-- criar `seed.py`.
-
----
-
-## Etapa 3 — Backend básico
-
-- criar fábrica Flask;
-- criar conexão com banco;
-- criar blueprint principal;
-- criar página inicial;
-- configurar templates.
-
----
-
-## Etapa 4 — Autenticação
-
-- tabela de usuário;
-- registro;
-- login;
-- logout;
-- hash de senha;
-- proteção de rotas.
-
----
-
-## Etapa 5 — CRUD principal
-
-- listar;
-- criar;
-- editar;
-- excluir;
-- validar dados;
-- usar queries parametrizadas.
-
----
-
-## Etapa 6 — API JSON
-
-- criar rota `/api/recurso`;
-- retornar JSON;
-- consumir com JavaScript;
-- atualizar página sem recarregar.
-
----
-
-## Etapa 7 — Frontend responsivo
-
-- criar `base.html`;
-- criar CSS Grid;
-- ajustar mobile;
-- melhorar acessibilidade.
-
----
-
-## Etapa 8 — API externa
-
-- escolher API;
-- criar serviço;
-- tratar erros;
-- exibir dados no frontend.
-
----
-
-## Etapa 9 — Exportação standalone
-
-- criar template exportável;
-- embutir dados;
-- embutir JS simples;
-- permitir download.
-
----
-
-## Etapa 10 — Testes
-
-- escrever pelo menos 3 testes;
-- rodar localmente;
-- corrigir erros;
-- documentar comando de teste.
-
----
-
-## Etapa 11 — Documentação final
-
-- README completo;
-- diagrama;
-- screenshots;
-- GitHub Pages;
-- revisão final.
-
----
-
 # 7. Modelo de divisão de tarefas
 
 A atividade é em **2 ou 3 alunos**. A divisão deve garantir que **todos tenham PRs aprovados**.
@@ -1511,27 +1327,6 @@ db.execute("SELECT * FROM usuario WHERE username = ?", (username,))
 
 ---
 
-## 5. JavaScript usando framework
-
-O requisito é JS vanilla.
-
-Evitem:
-
-- React;
-- Vue;
-- Angular;
-- jQuery, se possível evitar também.
-
-Usem:
-
-```javascript
-fetch();
-addEventListener();
-document.querySelector();
-```
-
----
-
 ## 6. Frontend sem responsividade
 
 Testem:
@@ -1669,25 +1464,13 @@ Não necessariamente. Pode ser consumida no frontend com `fetch`, como ViaCEP ou
 
 ---
 
-## Quantas tabelas são necessárias?
-
-No mínimo o suficiente para usar chave estrangeira. Um bom mínimo:
-
-```text
-usuario
-categoria
-tarefa
-```
-
----
-
 ## O export standalone precisa ser bonito?
 
 Preferencialmente. Mas precisa ser pelo menos funcional. Deve abrir offline e permitir alguma interação simples com JavaScript, como filtro ou busca.
 
 ---
 
-## O GitHub Pages precisa executar Flask?
+## O GitHub Pages vai executar a aplicação completa/Flask?
 
 Não. GitHub Pages é estático. Ele deve apresentar o projeto:
 
@@ -1696,4 +1479,5 @@ Não. GitHub Pages é estático. Ele deve apresentar o projeto:
 - tecnologias;
 - equipe;
 - link para o repositório.
+- exemplo de exportação offline.
 
